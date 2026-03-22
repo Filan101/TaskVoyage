@@ -15,6 +15,19 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+try:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+    }
+except ImportError:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 SECRET_KEY = 'django-insecure-do-manager-secret-key-change-in-production'
 
 DEBUG = True
@@ -65,16 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'do_manager',
-        'USER': 'root',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
-        'PORT': 3306,
-    }
-}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
